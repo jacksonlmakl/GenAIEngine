@@ -1,0 +1,13 @@
+boto3
+botocore
+Pillow
+torch
+transformers
+flask
+json5
+pandas
+requests
+accelerate>=0.26.0
+openai
+langchain
+langchain-community

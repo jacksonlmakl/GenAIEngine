@@ -1,0 +1,42 @@
+#!/bin/bash
+
+# Define the environment directory
+ENV_DIR="env"
+
+# Check if the environment already exists
+if [ ! -d "$ENV_DIR" ]; then
+    echo "Virtual environment does not exist. Creating one..."
+    
+    # Create the virtual environment
+    python3 -m venv $ENV_DIR
+    
+    # Activate the virtual environment
+    source $ENV_DIR/bin/activate
+    
+    # Upgrade pip to the latest version
+    pip install --upgrade pip
+
+    # Install required packages from requirements.txt
+    if [ -f "requirements.txt" ]; then
+        pip install -r requirements.txt
+        echo "All packages installed from requirements.txt"
+    else
+        echo "requirements.txt not found!"
+    fi
+
+else
+    echo "Virtual environment already exists. Skipping creation..."
+    
+    # Activate the virtual environment
+    source $ENV_DIR/bin/activate
+
+    # Ensure packages are installed if the environment exists
+    if [ -f "requirements.txt" ]; then
+        pip install -r requirements.txt
+        echo "Verified all packages are installed from requirements.txt"
+    else
+        echo "requirements.txt not found!"
+    fi
+fi
+
+nohup python3 llama_vision_engine.py > llama_vision_engine.log 2>&1 &
