@@ -20,11 +20,12 @@ def load_secrets():
 
 
 def upload_image_to_s3(image_file_path, s3_filename):
-
+    with open('secrets.json', 'r') as f:
+        _secrets = json.load(f)
     # Set up your AWS credentials and region
-    aws_access_key = 'AKIAZQ3DN4BP7RPB24Y3'
-    aws_secret_key = 'h3R7UuofVrej2dQjBV93erHECo9UnOAX4vK5rFdH'
-    bucket_name = 'jackson-makl-s3'
+    aws_access_key = _secrets.get('aws_access_key')
+    aws_secret_key = _secrets.get('aws_secret_key')
+    bucket_name = _secrets.get('aws_bucket_name')
 
     # Initialize the S3 client
     s3 = boto3.client('s3', aws_access_key_id=aws_access_key,
