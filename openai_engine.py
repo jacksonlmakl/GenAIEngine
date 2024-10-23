@@ -35,6 +35,7 @@ def upload_image_to_s3(image_file_path, s3_filename):
         # Upload the image to S3
         s3.upload_file(image_file_path, bucket_name, s3_filename, ExtraArgs={'ACL': 'public-read'})
 
+
         # Generate the public URL
         public_url = f"https://{bucket_name}.s3.amazonaws.com/{s3_filename}"
         return public_url
