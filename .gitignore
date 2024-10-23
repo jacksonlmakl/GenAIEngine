@@ -1,1 +1,5 @@
 secrets.json
+env
+__pycache__
+llama_engine.log
+llama_vision_engine.log

@@ -3,16 +3,37 @@
 # Define the environment directory
 ENV_DIR="env"
 
-# Check if the environment already exists
+# Function to check if a command exists
+command_exists () {
+    command -v "$1" >/dev/null 2>&1
+}
+
+# Check if python3 is installed
+if ! command_exists python3; then
+    echo "python3 not found. Installing python3..."
+    if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+        sudo apt update
+        sudo apt install python3 python3-venv python3-pip -y
+    elif [[ "$OSTYPE" == "darwin"* ]]; then
+        brew install python
+    else
+        echo "Unsupported OS: $OSTYPE"
+        exit 1
+    fi
+fi
+
+# Check if Homebrew is installed on macOS
+if [[ "$OSTYPE" == "darwin"* ]] && ! command_exists brew; then
+    echo "Homebrew not found. Installing Homebrew..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
+
+# Create virtual environment if it doesn't exist
 if [ ! -d "$ENV_DIR" ]; then
     echo "Virtual environment does not exist. Creating one..."
-    
-    # Create the virtual environment
     python3 -m venv $ENV_DIR
-    
-    # Activate the virtual environment
     source $ENV_DIR/bin/activate
-    
+
     # Upgrade pip to the latest version
     pip install --upgrade pip
 
@@ -26,11 +47,9 @@ if [ ! -d "$ENV_DIR" ]; then
 
 else
     echo "Virtual environment already exists. Skipping creation..."
-    
-    # Activate the virtual environment
     source $ENV_DIR/bin/activate
 
-    # Ensure packages are installed if the environment exists
+    # Ensure packages are installed
     if [ -f "requirements.txt" ]; then
         pip install -r requirements.txt
         echo "Verified all packages are installed from requirements.txt"
@@ -39,4 +58,8 @@ else
     fi
 fi
 
+# Run the llama_engine.py script with nohup
+echo "Running llama_engine.py..."
 nohup python3 llama_engine.py > llama_engine.log 2>&1 &
+
+echo "Llama engine is now running in the background. Logs are being written to llama_engine.log."

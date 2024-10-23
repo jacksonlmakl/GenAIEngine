@@ -8,9 +8,7 @@ Meta-Llama model has been loaded....
 [33mPress CTRL+C to quit[0m
  * Restarting with stat
  * Debugger is active!
- * Debugger PIN: 138-134-316
+ * Debugger PIN: 112-217-020
 Starting from v4.46, the `logits` model output will have the same type as the model (except at train time, where it will always be FP32)
-127.0.0.1 - - [23/Oct/2024 16:55:00] "POST /llama-engine HTTP/1.1" 200 -
-127.0.0.1 - - [23/Oct/2024 16:56:47] "POST /llama-engine HTTP/1.1" 200 -
-/opt/homebrew/Cellar/python@3.12/3.12.6/Frameworks/Python.framework/Versions/3.12/lib/python3.12/multiprocessing/resource_tracker.py:254: UserWarning: resource_tracker: There appear to be 1 leaked semaphore objects to clean up at shutdown
-  warnings.warn('resource_tracker: There appear to be %d '
+127.0.0.1 - - [23/Oct/2024 17:15:37] "POST /llama-engine HTTP/1.1" 200 -
+127.0.0.1 - - [23/Oct/2024 17:16:46] "POST /llama-engine HTTP/1.1" 200 -
